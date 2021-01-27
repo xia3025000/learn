@@ -11,10 +11,10 @@ public class TestList {
 
     private static void test01() {
         List<Integer> list = new ArrayList<>();
-        list.add(3);
-        list.add(2);
-        list.add(1);
-        list.remove(3);
+        list.add(new Integer(3));
+        list.add(new Integer(2));
+        list.add(new Integer(1));
+        list.remove(new Integer(2));//取决于删除的是对象还是int数字
         System.out.println(list);
     }
 

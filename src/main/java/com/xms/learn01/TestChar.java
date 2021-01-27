@@ -6,6 +6,8 @@ public class TestChar {
         int i = 1;
         char x = (char)('0' + i);
         System.out.println(x);
+        char y = (char)(i);
+        System.out.println(y);
     }
 
 }

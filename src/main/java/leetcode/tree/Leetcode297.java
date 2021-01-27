@@ -96,6 +96,7 @@ public class Leetcode297 {
     }
      */
 
+    /*
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
         if (root == null) {
@@ -145,27 +146,159 @@ public class Leetcode297 {
         return root;
     }
 
+     */
+
     /**
      *     1
      *   2   5
      * 3   4
      */
 
+    /*
+    public String serialize(TreeNode root) {
+        //tree: [v1,v2,null,...]
+        StringBuilder res = new StringBuilder("[");
+        Queue<TreeNode> queue = new LinkedList();
+        queue.add(root);
+        while(!queue.isEmpty()){
+            TreeNode cur = queue.remove();
+            if(cur == null){
+                res.append("null,");
+            }else{
+                res.append(cur.val + ",");
+                queue.add(cur.left);
+                queue.add(cur.right);
+            }
+        }
+        res.setLength(res.length() - 1);
+        res.append("]");
+        return res.toString();
+    }
+
+    public TreeNode deserialize(String data) {
+        String[] nodes = data.substring(1, data.length()-1).split(",");
+        TreeNode root = getNode(nodes[0]);
+        Queue<TreeNode> parents = new LinkedList();
+        TreeNode parent = root;
+        boolean isLeft = true;
+        for(int i = 1; i < nodes.length; i++){
+            TreeNode cur = getNode(nodes[i]);
+            if(isLeft){
+                parent.left = cur;
+            }else{
+                parent.right = cur;
+            }
+            if(cur != null){
+                parents.add(cur);
+            }
+            isLeft = !isLeft;
+            if(isLeft){
+                parent = parents.poll();
+            }
+        }
+        return root;
+    }
+
+    private TreeNode getNode(String val){
+        if(val.equals("null")){
+            return null;
+        }
+        return new TreeNode(Integer.valueOf(val));
+    }
+     */
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        if (root != null) {
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.add(root);
+            sb.append(root.val);
+            TreeNode curr = null;
+            while (!queue.isEmpty()) {
+                int size = queue.size();
+                for (int i = 0; i < size; i++) {
+                    curr = queue.remove();
+                    sb.append(",");
+                    if (curr.left != null) {
+                        queue.add(curr.left);
+                        sb.append(curr.left.val);
+                    } else {
+                        sb.append("null");
+                    }
+
+                    sb.append(",");
+                    if (curr.right != null) {
+                        queue.add(curr.right);
+                        sb.append(curr.right.val);
+                    } else {
+                        sb.append("null");
+                    }
+                }
+            }
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        //每一个不为null的父节点一定对应着字符串中两个子节点,队列是层序遍历的顺序
+        //队列前一个不为null的节点对应字符串前两个子节点,两个子节点结束后,那么队列下一个不为null的节点则必然对应字符串中前两个节点后的两个节点
+        if ("[]".equals(data)) {
+            return null;
+        }
+        String[] sub = data.substring(1, data.length() - 1).split(",");
+        if (sub.length == 0) {
+            return null;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode root = new TreeNode(Integer.parseInt(sub[0]));
+        queue.add(root);
+        TreeNode last = null;
+        TreeNode curr = null;
+        int k = 1;
+        while (!queue.isEmpty() && k <= sub.length) {
+            last = queue.remove();
+            if (!"null".equals(sub[k])) {
+                curr = new TreeNode(Integer.parseInt(sub[k]));
+                queue.add(curr);
+                last.left = curr;
+            }
+            k++;
+            if (k >= sub.length) {
+                break;
+            }
+            if (!"null".equals(sub[k])) {
+                curr = new TreeNode(Integer.parseInt(sub[k]));
+                queue.add(curr);
+                last.right = curr;
+            }
+            k++;
+        }
+        return root;
+    }
+
     public static void main(String[] args) {
         Leetcode297 leetcode297 = new Leetcode297();
-        TreeNode node1 = new TreeNode(1);
-        TreeNode node2 = new TreeNode(2);
-        TreeNode node3 = new TreeNode(3);
-        TreeNode node4 = new TreeNode(4);
-        TreeNode node5 = new TreeNode(5);
-        node1.left = node2;
-        node1.right = node5;
-        node2.left = node3;
-        node2.right = node4;
-        String str = leetcode297.serialize(node1);
-        System.out.println(str);
-        TreeNode root = leetcode297.deserialize(str);
-        System.out.println(root);
+        System.out.println(leetcode297.serialize(leetcode297.deserialize("[]")));;
+
+//        TreeNode node1 = new TreeNode(1);
+//        TreeNode node2 = new TreeNode(2);
+//        TreeNode node3 = new TreeNode(3);
+//        TreeNode node4 = new TreeNode(4);
+//        TreeNode node5 = new TreeNode(5);
+//        node1.left = node2;
+//        node1.right = node5;
+//        node2.left = node3;
+//        node2.right = node4;
+//        String str = leetcode297.serialize(node1);
+//        System.out.println(str);
+//        TreeNode root = leetcode297.deserialize(str);
+//        System.out.println(root);
+
+
 //        String str2 = leetcode297.serialize(root);
 //        System.out.println(str2);
 //

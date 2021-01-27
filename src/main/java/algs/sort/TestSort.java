@@ -5,23 +5,29 @@ import java.util.Random;
 public class TestSort {
 
     public static void main(String[] args) {
-        Integer[] arr = new Integer[100];
+        int n = 100;
+//        Integer[] arr = new Integer[n];
+        int[] arr = new int[n];
         Random random = new Random();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < n; i++) {
             arr[i] = random.nextInt(1000);
         }
-        Bubble bubble = new Bubble();
-        bubble.sort(arr);
+        Quick quick = new Quick();
+        long start = System.currentTimeMillis();
+        quick.sort(arr);
+        long end = System.currentTimeMillis();
         boolean isSort = true;
-        for (int i = 0; i < 99; i++) {
+        for (int i = 0; i < n - 1; i++) {
             if (arr[i] > arr[i + 1]) {
                 isSort = false;
             }
         }
-        System.out.println(isSort);
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < n; i++) {
             System.out.print(arr[i] + " ");
         }
+        System.out.println();
+        System.out.println(isSort);
+        System.out.println(end - start);
     }
 
 }

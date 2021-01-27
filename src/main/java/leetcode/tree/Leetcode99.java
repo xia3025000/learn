@@ -1,5 +1,7 @@
 package leetcode.tree;
 
+import java.util.Stack;
+
 public class Leetcode99 {
 
     /*
@@ -75,16 +77,54 @@ public class Leetcode99 {
         }
     }
 
+    public void recoverTree2(TreeNode root) {
+        //有序的数,两个不正常的节点交换
+        //那么不正常的2个节点
+        //如     1 2 3 4 5 6 7 8 9
+        //交换后 1 2 7 4 5 6 3 8 9
+        //或者   1 2 3 5 4 6 7 8 9 (这里5、4有问题)
+        //可知按顺序遍历第一个不正常的组合的前一个,与第二个不正常的组合的后一个,进行交换就可以
+        TreeNode firstNode = null;
+        TreeNode secondNode = null;
+        TreeNode preNode = null;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root;
+        while (curr != null || !stack.isEmpty()) {
+            while (curr != null) {
+                stack.push(curr);
+                curr = curr.left;
+            }
+            curr = stack.pop();
+            if (preNode != null && preNode.val > curr.val) {
+                if (firstNode == null) {
+                    firstNode = preNode;
+                }
+                secondNode = curr;
+            }
+            preNode = curr;
+            curr = curr.right;
+        }
+        int temp = firstNode.val;
+        firstNode.val = secondNode.val;
+        secondNode.val = temp;
+    }
+
     public static void main(String[] args) {
         Leetcode99 leetcode99 = new Leetcode99();
-        TreeNode node1 = new TreeNode(3);
-        TreeNode node2 = new TreeNode(1);
-        TreeNode node3 = new TreeNode(4);
-        TreeNode node4 = new TreeNode(2);
-        node1.left = node2;
-        node1.right = node3;
-        node3.left = node4;
-        leetcode99.recoverTree(node1);
+        TreeNode node1 = new TreeNode(1);
+        TreeNode node2 = new TreeNode(2);
+        TreeNode node3 = new TreeNode(3);
+        node1.left = node3;
+        node3.right = node2;
+
+//        TreeNode node1 = new TreeNode(3);
+//        TreeNode node2 = new TreeNode(1);
+//        TreeNode node3 = new TreeNode(4);
+//        TreeNode node4 = new TreeNode(2);
+//        node1.left = node2;
+//        node1.right = node3;
+//        node3.left = node4;
+        leetcode99.recoverTree2(node1);
     }
 
 }

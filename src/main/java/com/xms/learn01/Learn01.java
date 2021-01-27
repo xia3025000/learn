@@ -1,17 +1,16 @@
 package com.xms.learn01;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Learn01 {
 
     public static void main(String[] args) {
 //        String[][] str = new String[3][3];
 //        System.out.println(str[1][1]);
-        int x = lengthOfLongestSubstring("tmmzuxt");
-        System.out.println(x);
+//        int x = lengthOfLongestSubstring("tmmzuxt");
+//        System.out.println(x);
+        Random random = new Random();
+        System.out.println(random.nextInt());
     }
 
     public static void test01() {
