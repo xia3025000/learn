@@ -12,9 +12,9 @@ public class TestSort {
         for (int i = 0; i < n; i++) {
             arr[i] = random.nextInt(1000);
         }
-        Quick quick = new Quick();
+        Heap heap = new Heap();
         long start = System.currentTimeMillis();
-        quick.sort(arr);
+        heap.sort(arr);
         long end = System.currentTimeMillis();
         boolean isSort = true;
         for (int i = 0; i < n - 1; i++) {

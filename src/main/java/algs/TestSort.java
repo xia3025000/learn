@@ -1,5 +1,7 @@
 package algs;
 
+import algs.sort.Bubble;
+
 import java.util.Random;
 
 public class TestSort {
