@@ -7,7 +7,7 @@ public class TestMath {
     }
 
     private static void test01() {
-        System.out.println(Math.sqrt(17));
+        System.out.println((int) Math.sqrt(Integer.MAX_VALUE));
         System.out.println((int)(Math.floor(4.12)));
     }
 

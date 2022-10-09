@@ -13,7 +13,7 @@ public class TestComparator {
             @Override
             public int compare(Integer o1, Integer o2) {
                 System.out.println(o1 + " " + o2);
-                return 1;
+                return o1 - o2;
             }
         });
         for (int i = 0; i < arr.length; i++) {

@@ -18,7 +18,7 @@ public class BigNumSub {
                 int down = str2.charAt(j) - '0';
                 if (up > down) {
                     break;
-                } else if (up > down) {
+                } else if (up < down) {
                     String temp = str1;
                     str1 = str2;
                     str2 = temp;
